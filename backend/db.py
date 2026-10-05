@@ -1,7 +1,10 @@
+import os
 import sqlite3
 from pathlib import Path
 
-DB_PATH = Path(__file__).resolve().parent / "rentmatch.db"
+DATA_DIR = Path(os.getenv("RENTMATCH_DATA_DIR", Path(__file__).resolve().parent))
+DATA_DIR.mkdir(parents=True, exist_ok=True)
+DB_PATH = DATA_DIR / "rentmatch.db"
 
 
 def get_conn():

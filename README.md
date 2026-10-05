@@ -32,3 +32,11 @@ Set `GEMINI_API_KEY=YOUR_API_KEY_HERE` in `backend/.env`. The application still 
 
 ## Owner flow
 Register with the **List my property** role, open **Owner Portal**, enter property details, upload up to 8 images, and publish. The property is stored in SQLite and becomes available to renters immediately.
+
+## Deploy to Render
+This repository includes a Render Blueprint (`render.yaml`) that builds the frontend and serves it with the FastAPI backend from one web service. The service uses a persistent disk for the SQLite database and owner-uploaded photos; the Blueprint uses Render's paid Starter plan because persistent disks are not available on free instances.
+
+1. Push this repository to GitHub and open [Render Blueprints](https://dashboard.render.com/blueprints).
+2. Select **New Blueprint Instance**, connect this repository, and deploy the `render.yaml` Blueprint.
+3. Render generates a private `AUTH_SECRET` and mounts persistent data at `/var/data`. Gemini is optional; set `GEMINI_API_KEY` in the service environment if you want Gemini-powered requirement extraction.
+4. Open the deployed service URL. Its `/api/health` endpoint is used for health checks.

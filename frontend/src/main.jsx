@@ -5,7 +5,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "./styles.css";
 
-const API="http://127.0.0.1:8000";
+const API=import.meta.env.VITE_API_URL||(import.meta.env.DEV?"http://127.0.0.1:8000":"");
 const tokenKey="rentmatch_token";
 
 function api(path,options={}){

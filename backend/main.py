@@ -15,8 +15,9 @@ from auth import hash_password, verify_password, make_token, read_token
 from agent import run_agent, AREAS
 
 BASE_DIR = Path(__file__).resolve().parent
-UPLOAD_DIR = BASE_DIR / "uploads"
-UPLOAD_DIR.mkdir(exist_ok=True)
+DATA_DIR = Path(os.getenv("RENTMATCH_DATA_DIR", BASE_DIR))
+UPLOAD_DIR = DATA_DIR / "uploads"
+UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
 
 app = FastAPI(title="RentMatch AI", version="5.0.0")
 app.add_middleware(
@@ -277,3 +278,7 @@ def delete_owner_property(property_id:int, authorization: Optional[str] = Header
     user=owner_user(authorization); conn=get_conn(); row=conn.execute("SELECT * FROM properties WHERE id=? AND owner_user_id=?",(property_id,user["id"])).fetchone()
     if not row: conn.close(); raise HTTPException(404,"Your property was not found")
     conn.execute("DELETE FROM properties WHERE id=?",(property_id,)); conn.commit(); conn.close(); return {"status":"deleted"}
+
+FRONTEND_DIST = BASE_DIR.parent / "frontend" / "dist"
+if FRONTEND_DIST.is_dir():
+    app.mount("/", StaticFiles(directory=str(FRONTEND_DIST), html=True), name="frontend")

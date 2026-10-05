@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: rentmatch-ai
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r backend/requirements.txt && npm ci --prefix frontend && npm run build --prefix frontend
+    startCommand: cd backend && python -m uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: AUTH_SECRET
+        generateValue: true
+      - key: RENTMATCH_DATA_DIR
+        value: /var/data
+    disk:
+      name: rentmatch-data
+      mountPath: /var/data
+      sizeGB: 1
