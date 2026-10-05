@@ -1,0 +1,19 @@
+RENTMATCH AI — FINAL PROJECT
+
+1. Open THIS folder directly in VS Code. It must contain setup.bat.
+2. First time only:
+   cmd /c setup.bat
+3. Terminal 1:
+   .\start_backend.bat
+4. Open a second terminal.
+5. Terminal 2:
+   .\start_frontend.bat
+6. Open http://localhost:5173
+
+Account types:
+- Find a home: search, save and contact owners.
+- List my property: access Owner Portal and upload flat photos.
+
+The project contains a full Hyderabad property catalog across multiple areas. Searching a specific area applies a strict location filter. Browsing without an area shows the full catalog.
+
+Gemini is optional. Add GEMINI_API_KEY to backend/.env to enable Gemini-powered requirement extraction.
